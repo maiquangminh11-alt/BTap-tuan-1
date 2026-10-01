@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+long long tinhGiaiThua(int n) {
+    long long giaithua = 1; // Khởi tạo biến tích bằng 1
+    for (int i = 1; i <= n; i++) {
+        giaithua *= i;
+    }
+    return giaithua;
+}
+//vòng lặp chạy từ 1 đến n , mỗi lần lặp nhân một giá trị
+
+int main() {
+    int n;
+    cin >> n;
+    cout << n << "! = " << tinhGiaiThua(n) << endl;
+    return 0;
+}
+
+// độ phức tạp thời gian: O(N) do vòng i lặp n lần
+// độ phức tạp bộ nhớ: O(1) do chỉ dùng biến đơn lẻ
