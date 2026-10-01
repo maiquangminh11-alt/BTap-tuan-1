@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void rutGonPhanSo(int a, int b) {
+    if (b == 0) {
+        cout << "Mau so phai khac 0!" << endl;
+        return;
+    }
+    //ktra xem mẫu số có bằng 0 hay không, nếu có dừng hàm và tbao
+    
+    int x = abs(a), y = abs(b); // lất trị tuyệt dối để phép dư không bị lỗi dấu
+    while (y != 0) {
+        int r = x % y;
+        x = y;
+        y = r;
+    }
+// lấy x chia y để tìm số dư r, lặp lại cho đến khi y = 0
+    
+    int ucln = x;
+
+    a /= ucln;
+    b /= ucln;
+    // chia cả tử và mấu cho ucln
+
+    if (b < 0) {
+        a = -a;
+        b = -b;
+    }
+    //đổi dấu để mấu số luôn dương
+
+    cout << "Phan so rut gon: " << a << "/" << b << endl;
+}
+
+int main() {
+    int a, b;
+    cin >> a >> b;
+
+    rutGonPhanSo(a, b); 
+
+    return 0;
+}
