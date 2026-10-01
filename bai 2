@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void sapXep(vector<int>& a, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                swap(a[j], a[j + 1]);
+            }
+        }
+    }
+}
+\\ vòng lặp j để đẩy các số lớn xuống cuối mảng, trên vòng lặp i để đếm số lần sắp xếp
+int main() {
+    int n;
+    cin >> n;
+    vector<int> a(n); \\ tạo mảng động
+    for (int i = 0; i < n; i++) {
+      cin >> a[i];
+    }
+    \\ nhập các giá trị
+    
+    sapXep(a, n); \\truyền mảng a vào hàm sắp xếp
+
+    for (int x : a) {
+      cout << x << " ";
+    }
+    \\ lấy từng phần tử x trong mảng a để in ra
+    return 0;
+}
