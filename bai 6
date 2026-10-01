@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Hàm xóa phần tử ở vị trí thứ k
+void xoaPhanTu(vector<int>& a, int k) {
+    int n = a.size();
+    if (k < 0 || k >= n) {
+        cout << "Vi tri k khong hop le!" << endl;
+        return;
+    }
+    // ktra vị trí không hợp lệ
+
+    for (int i = k; i < n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+    // dồn các phần tử đứng sau k sang trái 1 vị trí
+
+    a.pop_back();
+    // xóa bỏ vị trí dư thừa ở cuối mảng
+}
+
+// Hàm chèn phần tử y vào vị trí thứ m
+void chenPhanTu(vector<int>& a, int m, int y) {
+    int n = a.size();
+    if (m < 0 || m > n) {
+        cout << "Vi tri m khong hop le!" << endl;
+        return;
+    }
+    // ktra vij trí m hợp lệ
+
+    a.push_back(0); 
+    // tăng thêm 1 ô nhớ ở cuối mảng để lấy chỗ dồn
+
+    for (int i = a.size() - 1; i > m; i--) {
+        a[i] = a[i - 1];
+    }
+    // dồn các phần tử từ m trở về sau sang phải 1 vị trí
+
+    a[m] = y;
+    // gán giá trị y vào vị trí m
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    int k;
+    cin >> k;
+    xoaPhanTu(a, k);
+
+    int m, y;
+    cin >> m >> y;
+    chenPhanTu(a, m, y);
+
+    return 0;
+}
+
+// độ phức tạp thời gian: O(1) ở TH tốt nhất (khi thao tác ở cuối mảng k = n-1 / m = n hoặc vị trí ko hợp lệ), O(N) ở TH xấu nhất (khi thao tác ở đầu mảng k = 0 / m = 0) do vòng lặp dồn mảng
+// độ phức tạp bộ nhớ: O(1) do thao tác trực tiếp trên mảng gốc và chỉ dùng các biến đơn lẻ
