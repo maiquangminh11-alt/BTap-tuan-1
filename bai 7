@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Hàm tính tổng các phần tử trong mảng 2 chiều
+void tinhTong(const vector<vector<int>>& a) {
+    long long sum = 0;
+    for (int r = 0; r < a.size(); r++) {
+        for (int c = 0; c < a[r].size(); c++) {
+            sum += a[r][c];
+        }
+    }
+    // cộng dồn tất cả các phần tử trong mảng 2 chiều
+
+    cout << "Tong cac phan tu trong mang: " << sum << endl;
+}
+
+// Hàm xóa dòng thứ k trong mảng 2 chiều
+void xoaDong(vector<vector<int>>& a, int k) {
+    int n = a.size();
+    if (k < 0 || k >= n) {
+        cout << "Dong k khong hop le!" << endl;
+        return;
+    }
+    // ktra dòng k hợp lệ
+
+    for (int r = k; r < n - 1; r++) {
+        a[r] = a[r + 1];
+    }
+    // dồn các dòng đứng sau k lên trên 1 vị trí
+
+    a.pop_back();
+    // xóa bỏ dòng dư thừa ở cuối mảng 2 chiều
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<int>> a(n, vector<int>(m));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> a[i][j];
+        }
+    }
+
+    tinhTong(a);
+
+    int k;
+    cin >> k;
+    xoaDong(a, k);
+
+    return 0;
+}
+
+// độ phức tạp thời gian: 
+// a: O(N*M) do phải dùng 2 vòng lặp để duyệt qua toàn bộ N*M phần tử trong mảng 2 chiều
+// b: O(1) ở TH tốt nhất (khi xóa dòng cuối k = n-1 hoặc vị trí ko hợp lệ), O(N*M) ở TH xấu nhất (khi xóa dòng đầu k = 0) do phải dồn các dòng còn lại chứa M phần tử
+// độ phức tạp bộ nhớ: O(1) cho cả 2 câu do thao tác trực tiếp trên mảng gốc và chỉ dùng các biến đơn lẻ
