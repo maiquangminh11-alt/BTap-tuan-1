@@ -40,3 +40,5 @@ int main() {
 
     return 0;
 }
+// độ phức tạp thời gian: O(1) nếu mấu bằng 0 và dừng lại ở bước 1, O(logN) nếu mẫu ko bằng 0 do phép chia lấy dư ở vòng while
+// độ phức tạp bộ nhớ: O(1) do chỉ dùng các biến đơn lẻ
