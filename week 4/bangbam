@@ -1,0 +1,197 @@
+
+#include <iostream>
+using namespace std;
+
+const int SIZE = 11;
+
+const int EMPTY = 0;
+const int OCCUPIED = 1;
+const int DELETED = 2;
+
+int T[SIZE];
+int state[SIZE];
+
+// Khoi tao bang bam
+void init() {
+    for (int i = 0; i < SIZE; i++) {
+        state[i] = EMPTY;
+    }
+}
+
+// Ham bam theo phuong phap chia
+int hashFunction(int k) {
+    return k % SIZE;
+}
+
+// Tim kiem khoa k
+int findKey(int k) {
+    int h = hashFunction(k);
+
+    for (int i = 0; i < SIZE; i++) {
+        int pos = (h + i) % SIZE;
+
+        // Gap o chua tung co du lieu
+        if (state[pos] == EMPTY) {
+            return -1;
+        }
+
+        // Gap khoa can tim
+        if (state[pos] == OCCUPIED && T[pos] == k) {
+            return pos;
+        }
+    }
+
+    return -1;
+}
+
+// Chen khoa k
+bool insertKey(int k) {
+    int h = hashFunction(k);
+    int firstDeleted = -1;
+
+    // Khong chen trung khoa
+    if (findKey(k) != -1) {
+        cout << "Khoa da ton tai!\n";
+        return false;
+    }
+
+    for (int i = 0; i < SIZE; i++) {
+        int pos = (h + i) % SIZE;
+
+        if (state[pos] == DELETED) {
+            if (firstDeleted == -1) {
+                firstDeleted = pos;
+            }
+        }
+        else if (state[pos] == EMPTY) {
+            if (firstDeleted != -1) {
+                pos = firstDeleted;
+            }
+
+            T[pos] = k;
+            state[pos] = OCCUPIED;
+
+            cout << "Chen thanh cong tai o " << pos << '\n';
+            return true;
+        }
+    }
+
+    // Bang khong con o EMPTY, nhung co the con o DELETED
+    if (firstDeleted != -1) {
+        T[firstDeleted] = k;
+        state[firstDeleted] = OCCUPIED;
+
+        cout << "Chen thanh cong tai o "
+             << firstDeleted << '\n';
+        return true;
+    }
+
+    cout << "Bang bam da day!\n";
+    return false;
+}
+
+// Xoa khoa k
+bool removeKey(int k) {
+    int pos = findKey(k);
+
+    if (pos == -1) {
+        cout << "Khong tim thay khoa!\n";
+        return false;
+    }
+
+    // Danh dau da xoa, khong bien thanh EMPTY
+    state[pos] = DELETED;
+
+    cout << "Da xoa khoa " << k
+         << " tai o " << pos << '\n';
+    return true;
+}
+
+// In bang bam
+void display() {
+    cout << "\nChi so: ";
+
+    for (int i = 0; i < SIZE; i++) {
+        cout.width(5);
+        cout << i;
+    }
+
+    cout << "\nGia tri:";
+
+    for (int i = 0; i < SIZE; i++) {
+        cout.width(5);
+
+        if (state[i] == OCCUPIED) {
+            cout << T[i];
+        }
+        else if (state[i] == DELETED) {
+            cout << "DEL";
+        }
+        else {
+            cout << "-";
+        }
+    }
+
+    cout << "\n";
+}
+
+int main() {
+    init();
+
+    int choice, k;
+
+    do {
+        cout << "\n===== BANG BAM =====\n";
+        cout << "1. Chen khoa\n";
+        cout << "2. Tim kiem khoa\n";
+        cout << "3. Xoa khoa\n";
+        cout << "4. In bang bam\n";
+        cout << "0. Thoat\n";
+        cout << "Lua chon: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Nhap khoa can chen: ";
+                cin >> k;
+                insertKey(k);
+                break;
+
+            case 2: {
+                cout << "Nhap khoa can tim: ";
+                cin >> k;
+
+                int pos = findKey(k);
+
+                if (pos == -1) {
+                    cout << "Khong tim thay!\n";
+                }
+                else {
+                    cout << "Tim thay tai o "
+                         << pos << '\n';
+                }
+                break;
+            }
+
+            case 3:
+                cout << "Nhap khoa can xoa: ";
+                cin >> k;
+                removeKey(k);
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 0:
+                cout << "Ket thuc chuong trinh.\n";
+                break;
+
+            default:
+                cout << "Lua chon khong hop le!\n";
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
