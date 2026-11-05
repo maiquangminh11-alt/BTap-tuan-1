@@ -1,0 +1,16 @@
+void insertionSort(vector<int>& a) {
+    int n = static_cast<int>(a.size());
+
+    for (int i = 1; i < n; ++i) {
+        int key = a[i];
+        int j = i - 1;
+
+        // Dịch các phần tử lớn hơn key sang phải.
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            --j;
+        }
+
+        a[j + 1] = key;
+    }
+}
