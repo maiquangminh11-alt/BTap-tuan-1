@@ -1,0 +1,38 @@
+void mergeRange(vector<int>& a, int left, int mid, int right) {
+    vector<int> temp;
+    temp.reserve(right - left + 1);
+
+    int i = left;
+    int j = mid + 1;
+
+    while (i <= mid && j <= right) {
+        // Khi bằng nhau, lấy bên trái trước để giữ ổn định.
+        if (a[i] <= a[j]) {
+            temp.push_back(a[i++]);
+        } else {
+            temp.push_back(a[j++]);
+        }
+    }
+
+    while (i <= mid) temp.push_back(a[i++]);
+    while (j <= right) temp.push_back(a[j++]);
+
+    for (int k = 0; k < static_cast<int>(temp.size()); ++k) {
+        a[left + k] = temp[k];
+    }
+}
+
+void mergeSortRange(vector<int>& a, int left, int right) {
+    if (left >= right) return;
+
+    int mid = left + (right - left) / 2;
+
+    mergeSortRange(a, left, mid);
+    mergeSortRange(a, mid + 1, right);
+    mergeRange(a, left, mid, right);
+}
+
+void mergeSort(vector<int>& a) {
+    if (a.empty()) return;
+    mergeSortRange(a, 0, static_cast<int>(a.size()) - 1);
+}
