@@ -1,0 +1,36 @@
+// Vun xuống tại nút i; heap gồm a[0] đến a[n - 1].
+void heapify(vector<int>& a, int n, int i) {
+    // Các nút từ n/2 trở đi là lá.
+    while (i < n / 2) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = left + 1;
+
+        if (left < n && a[left] > a[largest]) {
+            largest = left;
+        }
+
+        if (right < n && a[right] > a[largest]) {
+            largest = right;
+        }
+
+        if (largest == i) return;
+
+        swap(a[i], a[largest]);
+        i = largest;
+    }
+}
+
+void heapSort(vector<int>& a) {
+    int n = static_cast<int>(a.size());
+
+    // Xây dựng max-heap từ dưới lên.
+    for (int i = n / 2 - 1; i >= 0; --i) {
+        heapify(a, n, i);
+    }
+
+    for (int end = n - 1; end > 0; --end) {
+        swap(a[0], a[end]);
+        heapify(a, end, 0);
+    }
+}
