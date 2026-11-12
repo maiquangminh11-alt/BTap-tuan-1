@@ -8,8 +8,7 @@ struct Node {
 };
 
 int main() {
-    Node a{'A'}, b{'B'}, c{'C'}, d{'D'};
-    Node e{'E'}, f{'F'}, g{'G'};
+    Node a{'A'}, b{'B'}, c{'C'}, d{'D'}, e{'E'}, f{'F'}, g{'G'};
 
     Node* root = &a;        // root giữ địa chỉ của nút A
 
