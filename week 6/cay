@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    char data;
+    Node* firstChild = nullptr;
+    Node* nextSibling = nullptr;
+};
+
+int main() {
+    Node a{'A'}, b{'B'}, c{'C'}, d{'D'};
+    Node e{'E'}, f{'F'}, g{'G'};
+
+    Node* root = &a;        // root giữ địa chỉ của nút A
+
+    a.firstChild = &b;      // Con đầu tiên của A là B
+    b.nextSibling = &c;     // Sau B là C, cùng cha A
+    c.nextSibling = &d;     // Sau C là D, cùng cha A
+
+    b.firstChild = &e;      // Con đầu tiên của B là E
+    e.nextSibling = &f;     // Sau E là F, cùng cha B
+
+    d.firstChild = &g;      // Con đầu tiên của D là G
+
+    cout << root->firstChild->nextSibling->data;  // In ra C
+}
