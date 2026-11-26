@@ -1,0 +1,101 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct SymbolTable {
+    static const int MAX = 100;
+
+    struct Entry {
+        string key;
+        int value;
+    };
+
+    Entry a[MAX];
+    int count = 0;
+
+    bool isEmpty() {
+        return count == 0;
+    }
+
+    bool isFull() {
+        return count == MAX;
+    }
+
+    int size() {
+        return count;
+    }
+
+    // Tim vi tri cua key
+    int get(string key) {
+        for (int i = 0; i < count; ++i) {
+            if (a[i].key == key) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    // Kiem tra key co ton tai khong
+    bool contains(string key) {
+        return get(key) != -1;
+    }
+
+    // Them hoac cap nhat
+    void put(string key, int value) {
+        int i = get(key);
+
+        if (i != -1) {
+            a[i].value = value;
+            return;
+        }
+
+        if (isFull()) {
+            cout << "Symbol Table day" << endl;
+            return;
+        }
+
+        a[count].key = key;
+        a[count].value = value;
+        ++count;
+    }
+
+    // Xoa phan tu theo key
+    void remove(string key) {
+        int i = get(key);
+
+        if (i == -1) {
+            return;
+        }
+
+        for (int j = i; j < count - 1; ++j) {
+            a[j] = a[j + 1];
+        }
+
+        --count;
+    }
+
+    // In Symbol Table
+    void print() {
+        for (int i = 0; i < count; ++i) {
+            cout << a[i].key << ": "
+                 << a[i].value << endl;
+        }
+    }
+};
+
+int main() {
+    SymbolTable st;
+
+    st.put("A", 10);
+    st.put("B", 20);
+    st.put("C", 30);
+
+    st.put("B", 50);
+
+    st.remove("A");
+
+    st.print();
+
+    return 0;
+}
