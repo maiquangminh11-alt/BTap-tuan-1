@@ -1,0 +1,116 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Node {
+    string key;
+    int value;
+    Node* next;
+};
+
+struct SymbolTable {
+    Node* head = nullptr;
+    int count = 0;
+
+    bool isEmpty() {
+        return head == nullptr;
+    }
+
+    int size() {
+        return count;
+    }
+
+    // Tim Node theo key
+    Node* get(string key) {
+        Node* p = head;
+
+        while (p != nullptr) {
+            if (p->key == key) {
+                return p;
+            }
+            p = p->next;
+        }
+
+        return nullptr;
+    }
+
+    // Kiem tra key co ton tai khong
+    bool contains(string key) {
+        return get(key) != nullptr;
+    }
+
+    // Them hoac cap nhat
+    void put(string key, int value) {
+        Node* p = get(key);
+
+        if (p != nullptr) {
+            p->value = value;
+            return;
+        }
+
+        Node* q = new Node{key, value, head};
+        head = q;
+        ++count;
+    }
+
+    // Xoa phan tu theo key
+    void remove(string key) {
+        Node* p = head;
+        Node* prev = nullptr;
+
+        while (p != nullptr) {
+            if (p->key == key) {
+                if (p == head) {
+                    head = head->next;
+                }
+                else {
+                    prev->next = p->next;
+                }
+
+                delete p;
+                --count;
+                return;
+            }
+
+            prev = p;
+            p = p->next;
+        }
+    }
+
+    // In Symbol Table
+    void print() {
+        Node* p = head;
+
+        while (p != nullptr) {
+            cout << p->key << ": "
+                 << p->value << endl;
+
+            p = p->next;
+        }
+    }
+
+    // Giai phong bo nho
+    ~SymbolTable() {
+        while (head != nullptr) {
+            Node* p = head;
+            head = head->next;
+            delete p;
+        }
+    }
+};
+
+int main() {
+    SymbolTable st;
+
+    st.put("A", 10);
+    st.put("B", 20);
+    st.put("C", 30);
+
+    st.put("B", 50);
+
+    st.remove("A");
+
+    st.print();
+
+    return 0;
+}
